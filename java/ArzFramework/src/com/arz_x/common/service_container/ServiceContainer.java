@@ -105,7 +105,7 @@ public class ServiceContainer {
         } catch (ResultCodeException exp) {
             throw exp;
         } catch (Exception exp) {
-            throw new CommonException(CommonResultCode.AssertError);
+            throw new CommonException(CommonResultCode.UnExpected);
         }
     }
 
@@ -124,7 +124,7 @@ public class ServiceContainer {
             , boolean cacheResult, Set<String> creatingObjects, int searchDepth)
             throws ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException {
         if (searchedClassArg == null)
-            throw new CommonException(CommonResultCode.AssertError);
+            throw new CommonException(CommonResultCode.UnExpected);
 
         if (searchDepth > MAX_CLASS_CREATION_DEPTH)
             return throwIfNeeded(isOptional, new CommonException(CommonResultCode.InvalidState, "Max searched depth was reached"));
@@ -195,7 +195,7 @@ public class ServiceContainer {
         if (objectIterator != null) {
             final Object resultService = objectIterator.getService();
             if (!resultService.getClass().getName().equals(fullClassName))
-                return new CommonException(CommonResultCode.AssertError);
+                return new CommonException(CommonResultCode.UnExpected);
             return resultService;
         }
 

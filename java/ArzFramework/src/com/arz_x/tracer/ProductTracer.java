@@ -96,7 +96,7 @@ public class ProductTracer implements ITracer, Closeable {
 
         final File tracesDirectoryObject = new File(this.tracesDirectory);
         if ((!tracesDirectoryObject.mkdirs()) && (!tracesDirectoryObject.isDirectory()))
-            throw new CommonException(CommonResultCode.InvalidArgument, "Incorrect tracesDirectory argument");
+            throw new CommonException(CommonResultCode.InvalidParameter, "Incorrect tracesDirectory argument");
 
         SortedSet<File> allTraceFiles = new TreeSet<>(Collections.reverseOrder(fromOlderToNewerDateOrderComparator));
         {
@@ -277,7 +277,7 @@ public class ProductTracer implements ITracer, Closeable {
         final File finishedTraceFile = new File(traceFile.getParent(), newTraceFileName);
 
         if (!traceFile.renameTo(finishedTraceFile))
-            throw new CommonException(CommonResultCode.AccessDenied);
+            throw new CommonException(CommonResultCode.AccessIsDenied);
 
         return finishedTraceFile;
     }
@@ -290,7 +290,7 @@ public class ProductTracer implements ITracer, Closeable {
         if (filename.startsWith(PROCESSING_FILE_TRACE_PREFIX))
             return filename.substring(PROCESSING_FILE_TRACE_PREFIX.length(), filename.length() - PROCESSING_FILE_TRACE_PREFIX.length());
 
-        throw new CommonException(CommonResultCode.AssertError);
+        throw new CommonException(CommonResultCode.UnExpected);
     }
 
     private static String createTraceFileName() {

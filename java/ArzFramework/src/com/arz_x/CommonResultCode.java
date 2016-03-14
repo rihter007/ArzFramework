@@ -6,40 +6,43 @@ import java.util.Map;
 /**
  * Created by Rihter on 18.01.2015.
  * Represents common operation result code
+ *
+ * From c++ header arz/rtl/result_code.h
+ * #define DECLARE_SUCC_RESULT_CODE(facility, errorCode) (facility << 16) + errorCode
+ * #define DECLARE_FAIL_RESULT_CODE(facility, errorCode) (1 << 31) + (facility << 16) + errorCode
  */
-public enum CommonResultCode
-{
-    UnknownReason(0xD7BA83EC),                   // a crc32 of 'CommonResultCode.UnknownReason'
-    AssertError(0x69E30136),                     // a crc32 of 'CommonResultCode.AssertError'
-    AccessDenied(0xD506CF53),                    // a crc32 of 'CommonResultCode.AccessDenied'
-    NotFound(0x67E2835E),                        // a crc32 of 'CommonResultCode.NotFound'
-    InvalidState(0x01111111),                    // a crc32 of 'CommonResultCode.InvalidState'
-    InvalidArgument(0x713ECFD6),                 // a crc32 of 'CommonResultCode.InvalidArgument'
-    InvalidExternalSource(0x9DA1E1CF),           // a crc32 of 'CommonResultCode.InvalidExternalSource'
-    InvalidInternalState(0x266D38A0);            // a crc32 of 'CommonResultCode.InvalidInternalState'
+public enum CommonResultCode {
+    Unknown(0x833c0000),
+    UnExpected(0x833c0001),
+    NoImplented(0x833c0002),
+    NotFound(0x833c0003),
+    AlreadyDone(0x833c0004),
+    InvalidState(0x833c0005),
+    InvalidParameter(0x833c0006),
+    NoInterface(0x833c0007),
+    AlreadyExists(0x833c0008),
+    AccessIsDenied(0x833c009);
 
-    private int resultCode;
+    public static final int FACILITY = 0x33C; // 000011||001111||00
 
-    private static final Map<Integer, CommonResultCode> TypesMap = new HashMap<Integer, CommonResultCode>()
-    {
+    private static final Map<Integer, CommonResultCode> TypesMap = new HashMap<Integer, CommonResultCode>() {
         {
             for (CommonResultCode code : CommonResultCode.values())
                 put(code.getValue(), code);
         }
     };
 
-    CommonResultCode(int value)
-    {
+    private int resultCode;
+
+    CommonResultCode(int value) {
         this.resultCode = value;
     }
 
-    public int getValue()
-    {
+    public int getValue() {
         return this.resultCode;
     }
 
-    public static CommonResultCode getTypeByValue(int value)
-    {
+    public static CommonResultCode getTypeByValue(int value) {
         return TypesMap.get(value);
     }
 }

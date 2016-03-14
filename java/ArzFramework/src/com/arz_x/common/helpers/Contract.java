@@ -12,20 +12,20 @@ public class Contract {
 
     public static void requireTrue(boolean expression) {
         if (!expression)
-            throw new CommonException(CommonResultCode.AssertError);
+            throw new CommonException(CommonResultCode.UnExpected);
     }
 
     public static void requireNotNull(Object... objects) {
         for (Object obj : objects) {
             if (obj == null)
-                throw new CommonException(CommonResultCode.InvalidArgument);
+                throw new CommonException(CommonResultCode.InvalidParameter);
         }
     }
 
     public static void requireStringNotNullOrEmpty(String... strings) {
         for (String str : strings) {
             if ((str == null) || (str.isEmpty()))
-                throw new CommonException(CommonResultCode.InvalidArgument);
+                throw new CommonException(CommonResultCode.InvalidParameter);
         }
     }
 }

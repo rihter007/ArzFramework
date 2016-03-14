@@ -70,7 +70,7 @@ public class SynchronizedFileTracer implements IFileTracer, Closeable {
             this.traceFile = null;
         } catch (IOException exp) {
             /* it is impossible */
-            throw new CommonException(CommonResultCode.AssertError);
+            throw new CommonException(CommonResultCode.UnExpected);
         }
     }
 
@@ -82,7 +82,7 @@ public class SynchronizedFileTracer implements IFileTracer, Closeable {
             this.traceFile = new FileOutputStream(this.pathToFile, appendIfExists);
             this.currentFileSize = new File(this.pathToFile).length();
         } catch (FileNotFoundException exp) {
-            throw new CommonException(CommonResultCode.InvalidExternalSource);
+            throw new CommonException(CommonResultCode.NotFound);
         }
     }
 
@@ -108,7 +108,7 @@ public class SynchronizedFileTracer implements IFileTracer, Closeable {
             this.traceFile.flush();
             this.currentFileSize += messageBytes.length;
         } catch (IOException exp) {
-            throw new CommonException(CommonResultCode.AssertError);
+            throw new CommonException(CommonResultCode.UnExpected);
         }
     }
 }
